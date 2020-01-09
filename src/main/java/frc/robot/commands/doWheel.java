@@ -17,8 +17,7 @@ public class doWheel extends Command {
 	@Override
 
 	protected void execute() {
-    System.out.print("Starting Wheel!");
-    Robot.m_RecordPlayer.doWheel();
+		Robot.m_RecordPlayer.doWheel();
 	}
 
 	// Make this return true when this Command no longer needs to run execute()

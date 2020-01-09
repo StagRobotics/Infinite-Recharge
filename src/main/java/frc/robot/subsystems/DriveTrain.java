@@ -1,5 +1,7 @@
 package frc.robot.subsystems;
 
+import frc.robot.Robot;
+
 // Import packages needed to run
 
 import frc.robot.RobotMap;
@@ -54,6 +56,8 @@ public class DriveTrain extends Subsystem {
 		SmartDashboard.putNumber("Left Motor", leftMotor.get());
 
 		SmartDashboard.putNumber("Right Motor", rightMotor.get());
+
+		SmartDashboard.putString("Color Reading", Robot.m_RecordPlayer.getColorString());
 	}
 
 	public void drive(double leftY, double rightY) {

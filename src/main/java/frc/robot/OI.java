@@ -15,7 +15,7 @@ public class OI {
 
 	private Joystick rightJoystick = new Joystick(1);
 
-	private JoystickButton doWheel = new JoystickButton(rightJoystick, 3);
+	private JoystickButton doWheel = new JoystickButton(rightJoystick, 2);
 
 	NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
