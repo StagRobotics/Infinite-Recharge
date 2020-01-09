@@ -11,6 +11,7 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -43,6 +44,7 @@ public class RecordPlayer extends Subsystem {
   private Spark ToneArm = new Spark(RobotMap.toneArmPort);
   private ColorSensorV3 Stylus = new ColorSensorV3(RobotMap.StylusPort);
   private Relay Rotor = new Relay(RobotMap.rotorPort);
+  
   
   public RecordPlayer() {
     // Step 2
@@ -107,6 +109,7 @@ public class RecordPlayer extends Subsystem {
     // Step 4
     return colorString;
   }
+
   public void completeStage2(){
     int count = 0;
 
@@ -159,5 +162,62 @@ public class RecordPlayer extends Subsystem {
 
     // Raises arm back into chassis
     moveArmIn();
+  }
+
+  // The sensor of the field reads the color that is located two positions after the color the robot sees
+  // Takes the color from the field and transforms it into the color that we need to get too
+  public char getCorrectColor(char color){
+    char result;
+    switch (color)
+    {
+      case 'B' :
+        result = 'R'; 
+        break;
+      case 'G':
+        result = 'Y';
+        break;
+      case 'R' :
+        result = 'B';
+        break;
+      case 'Y' :
+        result = 'G';
+        break;
+      default :
+        result = 'E';
+        break;
+    }
+    return result;
+  }
+
+  public void completeStage3(char color) {
+    // Moves toneArmOut
+    moveArmOut();
+
+    // Get whatever color is under the sensor when the needle is first dropped
+    String startingColor = getColorString();
+
+    // Turns the wheel in a given direction
+    turnWheel(ISINVERSEROTOR);
+    
+    while(startingColor.charAt(0) != color){
+      startingColor = getColorString();
+    }
+
+    // Stops the wheel
+    stopWheel();
+
+    // Pulls the toneArm back in
+    moveArmIn();
+  }
+
+  public void doWheel(){
+    String gameData = DriverStation.getInstance().getGameSpecificMessage();
+
+    if(gameData.length() > 0){
+      char correctColor = getCorrectColor(gameData.charAt(0));
+      completeStage3(correctColor);
+    } else {
+      completeStage2();
+    }
   }
 }
