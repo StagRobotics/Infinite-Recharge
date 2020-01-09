@@ -9,17 +9,21 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.RecordPlayer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends TimedRobot {
   
   public static DriveTrain m_drivetrain;
+  public static RecordPlayer m_RecordPlayer;
   public static OI m_oi;
  
 
   public void robotInit() {
 
     // Assigns each variable to a subsystem
+
+    m_RecordPlayer = new RecordPlayer();
 
     m_drivetrain = new DriveTrain();
 

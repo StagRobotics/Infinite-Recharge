@@ -2,8 +2,9 @@ package frc.robot;
 
 
 import edu.wpi.first.networktables.*;
-
+import frc.robot.commands.*;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.buttons.JoystickButton;
 
 
 public class OI {
@@ -14,10 +15,12 @@ public class OI {
 
 	private Joystick rightJoystick = new Joystick(1);
 
+	private JoystickButton doWheel = new JoystickButton(rightJoystick, 3);
+
 	NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
 	public OI() {
-
+		doWheel.whenPressed(new doWheel());
 	}
 
 	public Joystick getLeftJoystick() {

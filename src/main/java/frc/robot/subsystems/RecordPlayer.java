@@ -166,7 +166,7 @@ public class RecordPlayer extends Subsystem {
 
   // The sensor of the field reads the color that is located two positions after the color the robot sees
   // Takes the color from the field and transforms it into the color that we need to get too
-  public char getCorrectColor(char color){
+  private char getCorrectColor(char color){
     char result;
     switch (color)
     {
