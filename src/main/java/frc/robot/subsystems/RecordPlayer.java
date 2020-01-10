@@ -14,6 +14,7 @@ import com.revrobotics.ColorSensorV3;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Spark;
+import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Robot;
@@ -43,7 +44,7 @@ public class RecordPlayer extends Subsystem {
 
   private Spark ToneArm = new Spark(RobotMap.toneArmPort);
   private ColorSensorV3 Stylus = new ColorSensorV3(RobotMap.StylusPort);
-  private Relay Rotor = new Relay(RobotMap.rotorPort);
+  private Talon Rotor = new Talon(RobotMap.rotorPort);
   
   
   public RecordPlayer() {
@@ -74,16 +75,12 @@ public class RecordPlayer extends Subsystem {
     ToneArm.set(0.0);
   }
 
-  public void turnWheel(boolean IsInverseRotor){
-    if(IsInverseRotor){
-      Rotor.set(Relay.Value.kForward);
-    } else {
-      Rotor.set(Relay.Value.kReverse);
-    }
+  public void turnWheel(){
+    Rotor.set(ARMSPEED);
   }
 
   public void stopWheel(){
-    Rotor.set(Relay.Value.kOff);
+    Rotor.set(0.0);
   }
 
   public String getColorString(){
@@ -121,7 +118,7 @@ public class RecordPlayer extends Subsystem {
     String lastColor = getColorString();
 
     // Turns the wheel in a given direction
-    turnWheel(ISINVERSEROTOR);
+    turnWheel();
 
     // Each color is on the wheel twice and therefore we need to rotate at least three times
     // Each "count" is equal to half of a rotation so 3 * 2 = 6
@@ -129,7 +126,6 @@ public class RecordPlayer extends Subsystem {
     while(count < 6){
       // Get whatever the motor currently sees
       String currentColor = getColorString();
-      System.out.println(count);
       // If the currentColor is equal to staring color, then we know we have completed a 1/2 rotation so increase the count by 1
       // Last color prevents the sensor from reading the same panel twice
       if(currentColor.equals(startingColor) && !currentColor.equals(lastColor)){
@@ -139,7 +135,7 @@ public class RecordPlayer extends Subsystem {
       // Sets the lastColor read to the currentColor
       lastColor = currentColor;
     }
-    System.out.println("Completed three spins moving two more colors");
+    
     // We want to spin the color wheel a little over three times to make sure the sensor on the field sees three complete rotations
     // Used to count the Colors past the final starting color
     int nextColorCounter = 0;
@@ -163,7 +159,6 @@ public class RecordPlayer extends Subsystem {
     // Raises arm back into chassis
     moveArmIn();
 
-    System.out.println("Done!");
   }
 
   // The sensor of the field reads the color that is located two positions after the color the robot sees
@@ -199,7 +194,7 @@ public class RecordPlayer extends Subsystem {
     String startingColor = getColorString();
 
     // Turns the wheel in a given direction
-    turnWheel(ISINVERSEROTOR);
+    turnWheel();
     
     while(startingColor.charAt(0) != color){
       startingColor = getColorString();
