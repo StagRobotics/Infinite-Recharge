@@ -129,7 +129,7 @@ public class RecordPlayer extends Subsystem {
     while(count < 6){
       // Get whatever the motor currently sees
       String currentColor = getColorString();
-
+      System.out.println(count);
       // If the currentColor is equal to staring color, then we know we have completed a 1/2 rotation so increase the count by 1
       // Last color prevents the sensor from reading the same panel twice
       if(currentColor.equals(startingColor) && !currentColor.equals(lastColor)){
@@ -139,7 +139,7 @@ public class RecordPlayer extends Subsystem {
       // Sets the lastColor read to the currentColor
       lastColor = currentColor;
     }
-
+    System.out.println("Completed three spins moving two more colors");
     // We want to spin the color wheel a little over three times to make sure the sensor on the field sees three complete rotations
     // Used to count the Colors past the final starting color
     int nextColorCounter = 0;
@@ -162,6 +162,8 @@ public class RecordPlayer extends Subsystem {
 
     // Raises arm back into chassis
     moveArmIn();
+
+    System.out.println("Done!");
   }
 
   // The sensor of the field reads the color that is located two positions after the color the robot sees
@@ -212,7 +214,6 @@ public class RecordPlayer extends Subsystem {
 
   public void doWheel(){
     String gameData = DriverStation.getInstance().getGameSpecificMessage();
-
     if(gameData.length() > 0){
       char correctColor = getCorrectColor(gameData.charAt(0));
       completeStage3(correctColor);
