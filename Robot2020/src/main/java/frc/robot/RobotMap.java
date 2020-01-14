@@ -10,4 +10,7 @@ public class RobotMap {
 
     public static int intakeMotor = 4;
     
+    public static int chuteMotor = 5;
+
+    public static int shootMotor = 6;
 }

@@ -21,10 +21,18 @@ public class PizzaOven extends Subsystem {
   // Initialize Static Variables
 
   private final double INTAKESPEED = 1.0;
-
+  private final double CHUTESPEED = 1.0;
+  private final double SHOOTSPEED = 1.0;
   // Initialize Motor Controllers
 
   private Talon intakeMotor = new Talon(RobotMap.intakeMotor);
+  private Talon chuteMotor = new Talon(RobotMap.chuteMotor);
+  private Talon shootMotor = new Talon(RobotMap.shootMotor);
+
+  public PizzaOven() {
+    super();
+    System.out.println("Shoot");
+  }
 
   @Override
   public void initDefaultCommand() {
@@ -36,7 +44,24 @@ public class PizzaOven extends Subsystem {
     intakeMotor.set(INTAKESPEED);
   }
 
-  public void intakeBackwards() {
+  public void intakeBackward() {
     intakeMotor.set(-INTAKESPEED);
   }
+
+  public void chuteForward(){
+    chuteMotor.set(CHUTESPEED)
+  }
+
+  public void chuteBackward(){
+    chuteMotor.set(-CHUTESPEED);
+  }
+
+  public void shootForward(){
+    shootMotor.set(SHOOTSPEED);
+  }
+
+  public void shootBackward(){
+    shootMotor.set(-SHOOTSPEED);
+  }
+
 }
