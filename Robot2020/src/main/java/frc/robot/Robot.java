@@ -9,20 +9,22 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.PizzaOven;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends TimedRobot {
   
   public static DriveTrain m_drivetrain;
+  public static PizzaOven m_PizzaOven;
   public static OI m_oi;
- 
+  
 
   public void robotInit() {
 
     // Assigns each variable to a subsystem
 
     m_drivetrain = new DriveTrain();
-
+    m_PizzaOven = new PizzaOven();
     m_oi =new OI();
 
   }
