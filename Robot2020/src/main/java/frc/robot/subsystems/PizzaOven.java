@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import frc.robot.RobotMap;
@@ -28,6 +30,11 @@ public class PizzaOven extends Subsystem {
   private Talon intakeMotor = new Talon(RobotMap.intakeMotor);
   private Talon chuteMotor = new Talon(RobotMap.chuteMotor);
   private Talon shootMotor = new Talon(RobotMap.shootMotor);
+  
+  private Relay dumpMotor = new Relay(RobotMap.dumpMotor);
+  private Relay camMotor = new Relay(RobotMap.camMotor);
+
+  private DigitalInput dumpLimit = new DigitalInput(RobotMap.dumpLimit);
 
   public PizzaOven() {
     super();
@@ -40,6 +47,11 @@ public class PizzaOven extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+
+  public boolean getDumpLimit(){
+    return dumpLimit.get();
+  }
+
   public void intakeForward() {
     intakeMotor.set(INTAKESPEED);
   }
@@ -49,7 +61,7 @@ public class PizzaOven extends Subsystem {
   }
 
   public void chuteForward(){
-    chuteMotor.set(CHUTESPEED)
+    chuteMotor.set(CHUTESPEED);
   }
 
   public void chuteBackward(){
@@ -64,4 +76,27 @@ public class PizzaOven extends Subsystem {
     shootMotor.set(-SHOOTSPEED);
   }
   
+  public void forwardDump(){
+    dumpMotor.set(Relay.Value.kForward);
+  }
+
+  public void reverseDump(){
+    dumpMotor.set(Relay.Value.kReverse);
+  }
+
+  public void offDump(){
+    dumpMotor.set(Relay.Value.kOff);
+  }
+
+  public void forwardCam(){
+    camMotor.set(Relay.Value.kForward);
+  }
+
+  public void offCam(){
+    camMotor.set(Relay.Value.kOff);
+  }
+
+
+
+
 }
