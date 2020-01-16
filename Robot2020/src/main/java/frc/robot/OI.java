@@ -24,6 +24,11 @@ public class OI {
 
 
 		dumpButton.whenPressed(new DumpBalls());
+
+		JoystickButton intakeButton = new JoystickButton(auxJoystick, 2);
+
+
+		intakeButton.whenPressed(new IntakeBalls());
 	}
 
 	public Joystick getLeftJoystick() {

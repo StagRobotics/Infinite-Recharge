@@ -10,11 +10,8 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class IntakeBalls extends Command {
-
-  private boolean startIntake;
-
-  public IntakeBalls() {
+public class ChuteMotor extends Command {
+  public ChuteMotor() {
     // Use requires() here to declare subsystem dependencies
     // eg. requires(chassis);
     requires(Robot.m_PizzaOven);
@@ -23,35 +20,42 @@ public class IntakeBalls extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    startIntake = ;
-    System.out.println(startIntake);
+    startingState = Robot.m_PizzaOven.getDumpLimit();
+    System.out.println(startingState);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (startIntake == false){
-      Robot.m_PizzaOven.intakeForward();
-    } else{
-      Robot.m_PizzaOven.intakeBackward();
+    if (startingState == false){
+      Robot.m_PizzaOven.forwardDump();
+    }
+    else {
+      Robot.m_PizzaOven.reverseDump();
     }
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    
-    return false;
+    if (startingState != Robot.m_PizzaOven.getDumpLimit()){
+      return true;
+    } else {
+      return false;
+    }
   }
 
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    
+
   }
 
   // Called when another command which requires one or more of the same
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
+
   }
 }
