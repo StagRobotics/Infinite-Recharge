@@ -24,6 +24,7 @@ public class DumpBalls extends Command {
   @Override
   protected void initialize() {
     startingState = Robot.m_PizzaOven.getDumpLimit();
+    System.out.println(startingState);
   }
 
   // Called repeatedly when this Command is scheduled to run
@@ -40,7 +41,7 @@ public class DumpBalls extends Command {
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    if (startingState == Robot.m_PizzaOven.getDumpLimit()){
+    if (startingState != Robot.m_PizzaOven.getDumpLimit()){
       return true;
     } else {
       return false;
@@ -57,6 +58,6 @@ public class DumpBalls extends Command {
   // subsystems is scheduled to run
   @Override
   protected void interrupted() {
-    end();
+    //end();
   }
 }
