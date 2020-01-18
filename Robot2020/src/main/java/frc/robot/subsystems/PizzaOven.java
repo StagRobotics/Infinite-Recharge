@@ -19,6 +19,8 @@ import frc.robot.RobotMap;
 public class PizzaOven extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
+  // Variables
+  private boolean onIntake = false;
 
   // Initialize Static Variables
 
@@ -47,6 +49,15 @@ public class PizzaOven extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  public void toggleIntake(){
+    if (onIntake == false){
+      intakeForward();
+      onIntake = true;
+    }else{
+      intakeOff();
+      onIntake = false;
+    }
+  }
 
   public boolean getDumpLimit(){
     return dumpLimit.get();
@@ -58,6 +69,10 @@ public class PizzaOven extends Subsystem {
 
   public void intakeBackward() {
     intakeMotor.set(-INTAKESPEED);
+  }
+
+  public void intakeOff(){
+    intakeMotor.set(0);
   }
 
   public void chuteForward(){

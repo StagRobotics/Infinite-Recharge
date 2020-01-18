@@ -12,7 +12,7 @@ import frc.robot.Robot;
 
 public class IntakeBalls extends Command {
 
-  private boolean startIntake;
+  
 
   public IntakeBalls() {
     // Use requires() here to declare subsystem dependencies
@@ -23,25 +23,20 @@ public class IntakeBalls extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    startIntake = ;
-    System.out.println(startIntake);
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    if (startIntake == false){
-      Robot.m_PizzaOven.intakeForward();
-    } else{
-      Robot.m_PizzaOven.intakeBackward();
-    }
+    Robot.m_PizzaOven.toggleIntake();
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
     
-    return false;
+    return true;
   }
 
   // Called once after isFinished returns true
