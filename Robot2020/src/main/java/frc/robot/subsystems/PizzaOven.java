@@ -22,6 +22,7 @@ public class PizzaOven extends Subsystem {
   // Variables
   private boolean onIntake = false;
   private boolean chuteOn = false;
+  private boolean shootOn = false;
 
   // Initialize Static Variables
 
@@ -70,6 +71,16 @@ public class PizzaOven extends Subsystem {
     }
   }
 
+  public void toggleShoot(){
+    if (chuteOn == false){
+      shootForward();
+      shootOn = true;
+    }else{
+      shootOff();
+      shootOn = false;
+    }
+  }
+
   public boolean getDumpLimit(){
     return dumpLimit.get();
   }
@@ -104,6 +115,10 @@ public class PizzaOven extends Subsystem {
 
   public void shootBackward(){
     shootMotor.set(-SHOOTSPEED);
+  }
+
+  public void shootOff(){
+    shootMotor.set(0);
   }
   
   public void forwardDump(){
