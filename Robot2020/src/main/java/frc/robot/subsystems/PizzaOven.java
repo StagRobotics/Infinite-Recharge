@@ -21,6 +21,7 @@ public class PizzaOven extends Subsystem {
   // here. Call these from Commands.
   // Variables
   private boolean onIntake = false;
+  private boolean chuteOn = false;
 
   // Initialize Static Variables
 
@@ -59,6 +60,16 @@ public class PizzaOven extends Subsystem {
     }
   }
 
+  public void toggleChute(){
+    if (chuteOn == false){
+      chuteForward();
+      chuteOn = true;
+    }else{
+      chuteOff();
+      chuteOn = false;
+    }
+  }
+
   public boolean getDumpLimit(){
     return dumpLimit.get();
   }
@@ -81,6 +92,10 @@ public class PizzaOven extends Subsystem {
 
   public void chuteBackward(){
     chuteMotor.set(-CHUTESPEED);
+  }
+
+  public void chuteOff(){
+    chuteMotor.set(0);
   }
 
   public void shootForward(){
