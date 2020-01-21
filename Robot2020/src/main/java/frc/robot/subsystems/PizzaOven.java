@@ -22,18 +22,15 @@ public class PizzaOven extends Subsystem {
   // Variables
   private boolean onIntake = false;
   private boolean chuteOn = false;
-  private boolean shootOn = false;
 
   // Initialize Static Variables
-
   private final double INTAKESPEED = 1.0;
   private final double CHUTESPEED = 1.0;
-  private final double SHOOTSPEED = 1.0;
+
   // Initialize Motor Controllers
 
   private Talon intakeMotor = new Talon(RobotMap.intakeMotor);
   private Talon chuteMotor = new Talon(RobotMap.chuteMotor);
-  private Talon shootMotor = new Talon(RobotMap.shootMotor);
   
   private Relay dumpMotor = new Relay(RobotMap.dumpMotor);
   private Relay camMotor = new Relay(RobotMap.camMotor);
@@ -71,16 +68,6 @@ public class PizzaOven extends Subsystem {
     }
   }
 
-  public void toggleShoot(){
-    if (chuteOn == false){
-      shootForward();
-      shootOn = true;
-    }else{
-      shootOff();
-      shootOn = false;
-    }
-  }
-
   public boolean getDumpLimit(){
     return dumpLimit.get();
   }
@@ -107,18 +94,6 @@ public class PizzaOven extends Subsystem {
 
   public void chuteOff(){
     chuteMotor.set(0);
-  }
-
-  public void shootForward(){
-    shootMotor.set(SHOOTSPEED);
-  }
-
-  public void shootBackward(){
-    shootMotor.set(-SHOOTSPEED);
-  }
-
-  public void shootOff(){
-    shootMotor.set(0);
   }
   
   public void forwardDump(){

@@ -12,7 +12,9 @@ public class RobotMap {
     
     public static int chuteMotor = 5;
 
-    public static int shootMotor = 6;
+    public static int rightWinchMotor = 6;
+
+    public static int leftWinchMotor = 7;
 
     //Relay
 
