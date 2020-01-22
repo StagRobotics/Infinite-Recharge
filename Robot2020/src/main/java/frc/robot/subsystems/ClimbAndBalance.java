@@ -18,14 +18,14 @@ public class ClimbAndBalance extends Subsystem {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
   //Variables
-
+  private boolean climbOn = false;
+  private boolean balanceOn = false;
   //Initialize Static Variables
   private double WINCHSPEED = 1.0;
   private double BALANCERSPEED = 1.0;
   //Initalize Motor Controllers
-  private Talon leftWinchMotor = new Talon(RobotMap.leftWinchMotor);
-  private Talon rightWinchMotor = new Talon(RobotMap.rightWinchMotor);
-
+  private Talon winchMotor = new Talon(RobotMap.winchMotor);
+  private Talon balancer = new Talon(RobotMap.balancerMotor);
 
 
   @Override
@@ -34,14 +34,52 @@ public class ClimbAndBalance extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  public void toggleClimb(){
+    if (climbOn == false){
+      winchForward();
+      climbOn = true;
+    }else{
+      winchOff();
+      climbOn = false;
+    }
+  }
+
+  public void toogleBalance(){
+    if (balanceOn == false){
+      balancerForward();
+      balanceOn = true;
+    }else{
+      balancerOff();
+      balanceOn = false;
+    }
+  }
+
+  public void toggleBalance(){
+
+  }
+
   private void winchForward(){
-    leftWinchMotor.set(WINCHSPEED);
-    rightWinchMotor.set(WINCHSPEED);
+    winchMotor.set(WINCHSPEED);
   }
 
   private void winchBackward(){
-    leftWinchMotor.set(-WINCHSPEED);
-    rightWinchMotor.set(-WINCHSPEED);
+    winchMotor.set(-WINCHSPEED);
+  }
+
+  private void winchOff(){
+    winchMotor.set(0);
+  }
+
+  private void balancerForward(){
+    balancer.set(BALANCERSPEED);
+  }
+
+  private void balancerBackward(){
+    balancer.set(-BALANCERSPEED);
+  }
+
+  private void balancerOff(){
+    balancer.set(0);
   }
 
 
