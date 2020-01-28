@@ -44,19 +44,18 @@ public class ClimbAndBalance extends Subsystem {
     }
   }
 
-  public void toogleBalance(){
+  public void toggleBalance(){
     if (balanceOn == false){
       balancerForward();
+      System.out.println("balancer false");
       balanceOn = true;
     }else{
       balancerOff();
+      System.out.println("balancer true");
       balanceOn = false;
     }
   }
 
-  public void toggleBalance(){
-
-  }
 
   private void winchForward(){
     winchMotor.set(WINCHSPEED);

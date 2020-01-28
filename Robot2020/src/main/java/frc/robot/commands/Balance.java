@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
+import frc.robot.Robot;
 public class Balance extends Command {
   public Balance() {
     // Use requires() here to declare subsystem dependencies
@@ -25,6 +25,7 @@ public class Balance extends Command {
   @Override
   protected void execute() {
     Robot.m_ClimbAndBalance.toggleBalance();
+    System.out.println("Balance");
   }
 
   // Make this return true when this Command no longer needs to run execute()

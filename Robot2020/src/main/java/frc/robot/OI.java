@@ -22,13 +22,19 @@ public class OI {
 	public OI() {
 		JoystickButton dumpButton = new JoystickButton(auxJoystick, 1);
 
-
 		dumpButton.whenPressed(new DumpBalls());
 
 		JoystickButton intakeButton = new JoystickButton(auxJoystick, 3);
 
-
 		intakeButton.whenPressed(new IntakeBalls());
+
+		JoystickButton climbButton = new JoystickButton(auxJoystick, 4);
+
+		climbButton.whenPressed(new Climb());
+
+		JoystickButton balanceButton = new JoystickButton(auxJoystick, 5);
+
+		balanceButton.whenPressed(new Balance());
 	}
 
 	public Joystick getLeftJoystick() {

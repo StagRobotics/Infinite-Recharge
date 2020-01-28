@@ -8,11 +8,11 @@ public class RobotMap {
 
     public static int rightMotor = 1;
 
-    public static int intakeMotor = 4;
+    public static int intakeMotor = 3;
 
-    public static int winchMotor = 5;
+    public static int winchMotor = 4;
 
-    public static int balancerMotor = 6;
+    public static int balancerMotor = 5;
 
     //Relay
 
