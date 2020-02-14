@@ -11,6 +11,7 @@ import edu.wpi.first.wpilibj.TimedRobot;
 import frc.robot.subsystems.ClimbAndBalance;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.PizzaOven;
+import frc.robot.subsystems.RecordPlayer;
 import edu.wpi.first.wpilibj.command.Scheduler;
 
 public class Robot extends TimedRobot {
@@ -18,6 +19,8 @@ public class Robot extends TimedRobot {
   public static DriveTrain m_drivetrain;
   public static PizzaOven m_PizzaOven;
   public static ClimbAndBalance m_ClimbAndBalance;
+
+  public static RecordPlayer m_RecordPlayer;
   public static OI m_oi;
 
   
@@ -25,6 +28,8 @@ public class Robot extends TimedRobot {
   public void robotInit() {
 
     // Assigns each variable to a subsystem
+
+    m_RecordPlayer = new RecordPlayer();
 
     m_drivetrain = new DriveTrain();
     m_ClimbAndBalance = new ClimbAndBalance();

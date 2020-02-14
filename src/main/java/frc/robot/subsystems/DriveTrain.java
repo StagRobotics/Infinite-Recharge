@@ -1,11 +1,15 @@
 package frc.robot.subsystems;
 
+import frc.robot.Robot;
+
 // Import packages needed to run
 
 import frc.robot.RobotMap;
 
 import frc.robot.commands.*;
 import edu.wpi.first.networktables.NetworkTableInstance;
+
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PWMVictorSPX;
 import edu.wpi.first.wpilibj.Encoder;
 
@@ -26,6 +30,8 @@ public class DriveTrain extends Subsystem {
 
 	private final double DEADBAND = 0.10;
 	private final double SPEED = 0.40;
+	private final double WHEEL_DIAMETER = 6.0;
+
 	private final double WHEEL_DIAMETER = 6.0;
 
 	// Initialize Motor Controllers
@@ -49,6 +55,9 @@ public class DriveTrain extends Subsystem {
 	public NetworkTableEntry ta = table.getEntry("ta");
 
 	public AnalogGyro gyro = new AnalogGyro(0);
+
+	public Encoder leftEncoder = new Encoder(RobotMap.leftEncoderPort1, RobotMap.leftEncoderPort2, false, Encoder.EncodingType.k4X);
+	public Encoder rightEncoder = new Encoder(RobotMap.rightEncoderPort1, RobotMap.rightEncoderPort2, false, Encoder.EncodingType.k4X);
 
 	// Creates the DriveTrain Subsystem
 
@@ -76,6 +85,22 @@ public class DriveTrain extends Subsystem {
 		gyro.calibrate();
 		gyro.reset();
 
+		leftEncoder.setMaxPeriod(1);
+		leftEncoder.setMinRate(10);
+		leftEncoder.setDistancePerPulse(0.00275);
+		leftEncoder.setReverseDirection(true);
+		leftEncoder.setSamplesToAverage(7);
+		leftEncoder.reset();
+
+		rightEncoder.setMaxPeriod(1);
+		rightEncoder.setMinRate(10);
+		rightEncoder.setDistancePerPulse(0.00275);
+		rightEncoder.setReverseDirection(true);
+		rightEncoder.setSamplesToAverage(7);
+		rightEncoder.reset();
+
+		addChild("Left Encoder", leftEncoder);
+		addChild("Right Encoder", rightEncoder);
 	}
 
 	@Override
@@ -100,6 +125,19 @@ public class DriveTrain extends Subsystem {
 
 		SmartDashboard.putNumber("SPI Gyro Get Angle", gyro.getAngle());
 		SmartDashboard.putNumber("Distance", getDistance());
+
+		SmartDashboard.putString("Color Reading", Robot.m_RecordPlayer.getColorString());
+
+		SmartDashboard.putNumber("Encoder Left", getLeftInches());
+		SmartDashboard.putNumber("Encoder Right", getRightInches());
+	}
+
+	public double getLeftInches() {
+		return leftEncoder.getDistance() * Math.PI * WHEEL_DIAMETER;
+	}
+
+	public double getRightInches() {
+		return rightEncoder.getDistance() * Math.PI * WHEEL_DIAMETER;
 	}
 
 	public void drive(double leftY, double rightY) {
