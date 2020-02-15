@@ -15,6 +15,8 @@ public class OI {
 
 	private Joystick rightJoystick = new Joystick(1);
 
+
+	
 	NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
 
 	public OI() {
@@ -62,7 +64,7 @@ public class OI {
 		driveTest.whenPressed(new Auto5Ball());
 		JoystickButton reset = new JoystickButton(rightJoystick, 4);
 		reset.whenPressed(new Reset());
-		doWheel.whenPressed(new doWheel());
+		
 	}
 
 	public Joystick getLeftJoystick() {
