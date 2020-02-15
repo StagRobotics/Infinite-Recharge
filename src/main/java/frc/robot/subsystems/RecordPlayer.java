@@ -16,7 +16,9 @@ import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Spark;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import frc.robot.Robot;
 import frc.robot.RobotMap;
@@ -30,7 +32,7 @@ import frc.robot.RobotMap;
 
 public class RecordPlayer extends Subsystem {
   
-  private final double ARMSPEED = 0.5;
+  private final double ARMSPEED = 0.17;
   private final boolean ISINVERSEROTOR = false;
   private final int NUMBEROFTIMESAFTER = 2;
 
@@ -40,6 +42,8 @@ public class RecordPlayer extends Subsystem {
   private final Color kGreenTarget = ColorMatch.makeColor(0.197, 0.561, 0.240);
   private final Color kRedTarget = ColorMatch.makeColor(0.561, 0.232, 0.114);
   private final Color kYellowTarget = ColorMatch.makeColor(0.361, 0.524, 0.113);
+
+  private Timer timer = new Timer();
 
   private boolean isArmOut = false;
 
@@ -62,12 +66,12 @@ public class RecordPlayer extends Subsystem {
 
   }
 
-  public void moveArmOut() {
+  public void moveArmIn() {
     ToneArm.set(DoubleSolenoid.Value.kForward);
     isArmOut = true;
   }
 
-  public void moveArmIn(){
+  public void moveArmOut(){
     ToneArm.set(DoubleSolenoid.Value.kReverse);
     isArmOut = false;
   }
@@ -153,11 +157,21 @@ public class RecordPlayer extends Subsystem {
     // Stops Wheel
     stopWheel();
 
+    pause(0.5);
+
     // Raises arm back into chassis
     moveArmIn();
 
   }
 
+  public void pause(double time){
+    timer.reset();
+    timer.start();
+    while(timer.get() < time){
+      SmartDashboard.putString("Timer Status", "Waiting");
+    }
+    SmartDashboard.putString("Timer Status", "Done");
+  }
   // The sensor of the field reads the color that is located two positions after the color the robot sees
   // Takes the color from the field and transforms it into the color that we need to get too
   public char getCorrectColor(char color){
@@ -195,10 +209,13 @@ public class RecordPlayer extends Subsystem {
     
     while(startingColor.charAt(0) != color){
       startingColor = getColorString();
+      Robot.m_drivetrain.log();
     }
 
     // Stops the wheel
     stopWheel();
+
+    pause(0.5);
 
     // Pulls the toneArm back in
     moveArmIn();

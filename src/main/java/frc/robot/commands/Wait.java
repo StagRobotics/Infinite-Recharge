@@ -7,33 +7,37 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 
-public class level3 extends Command {
-  public level3() {
-    requires(Robot.m_RecordPlayer);
+public class Wait extends Command {
+  double waitTime = 0.0;
+  Timer timer = new Timer();
+  public Wait(double time) {
+    // Use requires() here to declare subsystem dependencies
+    // eg. requires(chassis);
+    requires(Robot.m_drivetrain);
+    waitTime = time;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    timer.reset();
+    timer.start();
+    
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    String gameData = DriverStation.getInstance().getGameSpecificMessage();
-    char correctColor = Robot.m_RecordPlayer.getCorrectColor(gameData.charAt(0));
-    Robot.m_RecordPlayer.completeStage3(correctColor);
-    
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
-    return true;
+    return timer.get() >= waitTime;
   }
 
   // Called once after isFinished returns true

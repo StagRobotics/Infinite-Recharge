@@ -13,6 +13,8 @@ public class RobotMap {
     public static int winchMotor = 2;
 
     public static int balancerMotor = 3;
+      
+    public static int rotorPort = 4;
 
     //Relay
 
@@ -40,8 +42,7 @@ public class RobotMap {
 
     public static int RightTwo = 3;
 
-    
-    public static int rotorPort = 3;
+  
 
     public static Port StylusPort = Port.kOnboard;
 
