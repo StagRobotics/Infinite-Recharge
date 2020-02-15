@@ -11,6 +11,7 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Relay;
 import edu.wpi.first.wpilibj.Spark;
@@ -42,7 +43,7 @@ public class RecordPlayer extends Subsystem {
 
   private boolean isArmOut = false;
 
-  private Spark ToneArm = new Spark(RobotMap.toneArmPort);
+  private DoubleSolenoid ToneArm = new DoubleSolenoid(RobotMap.ToneArmPort1, RobotMap.ToneArmPort2);
   private ColorSensorV3 Stylus = new ColorSensorV3(RobotMap.StylusPort);
   private Talon Rotor = new Talon(RobotMap.rotorPort);
   
@@ -62,17 +63,13 @@ public class RecordPlayer extends Subsystem {
   }
 
   public void moveArmOut() {
-    ToneArm.set(ARMSPEED);
+    ToneArm.set(DoubleSolenoid.Value.kForward);
     isArmOut = true;
   }
 
   public void moveArmIn(){
-    ToneArm.set(-ARMSPEED);
+    ToneArm.set(DoubleSolenoid.Value.kReverse);
     isArmOut = false;
-  }
-
-  public void stopArm(){
-    ToneArm.set(0.0);
   }
 
   public void turnWheel(){
@@ -163,7 +160,7 @@ public class RecordPlayer extends Subsystem {
 
   // The sensor of the field reads the color that is located two positions after the color the robot sees
   // Takes the color from the field and transforms it into the color that we need to get too
-  private char getCorrectColor(char color){
+  public char getCorrectColor(char color){
     char result;
     switch (color)
     {

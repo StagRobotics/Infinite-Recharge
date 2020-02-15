@@ -26,7 +26,9 @@ public class RobotMap {
 
     public static int pizzaPanPort2 = 1;
 
-
+    public static int ToneArmPort1 = 2;
+     
+    public static int ToneArmPort2 = 3;
     //Digital Input
 
 
@@ -39,8 +41,6 @@ public class RobotMap {
     public static int RightTwo = 3;
 
     
-    public static int toneArmPort = 2;
-
     public static int rotorPort = 3;
 
     public static Port StylusPort = Port.kOnboard;

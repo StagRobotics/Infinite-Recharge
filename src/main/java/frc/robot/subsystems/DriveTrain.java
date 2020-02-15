@@ -32,18 +32,11 @@ public class DriveTrain extends Subsystem {
 	private final double SPEED = 0.40;
 	private final double WHEEL_DIAMETER = 6.0;
 
-	private final double WHEEL_DIAMETER = 6.0;
-
 	// Initialize Motor Controllers
 
 	private PWMVictorSPX leftMotor = new PWMVictorSPX(RobotMap.leftMotor);
 
 	private PWMVictorSPX rightMotor = new PWMVictorSPX(RobotMap.rightMotor);
-
-	private Encoder leftEncoder = new Encoder(RobotMap.LeftOne, RobotMap.LeftTwo, false, Encoder.EncodingType.k4X);
-
-	private Encoder rightEncoder = new Encoder(RobotMap.RightOne, RobotMap.RightTwo, false, Encoder.EncodingType.k4X);
-
 	// Initialize the type of drive -- DiffernetialDrive is used for Tank Drive
 
 	public DifferentialDrive robotDrive = new DifferentialDrive(leftMotor, rightMotor);
