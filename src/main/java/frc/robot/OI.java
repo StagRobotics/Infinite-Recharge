@@ -66,10 +66,10 @@ public class OI {
 		JoystickButton reset = new JoystickButton(rightJoystick, 4);
 		reset.whenPressed(new Reset());
 
-		JoystickButton doLevel2Button = new JoystickButton(leftJoystick, 4);
+		JoystickButton doLevel2Button = new JoystickButton(auxJoystick, 8);
 		doLevel2Button.whenPressed(new level2());
 
-		JoystickButton doLevel3Button = new JoystickButton(leftJoystick, 5);
+		JoystickButton doLevel3Button = new JoystickButton(auxJoystick, 9);
 		doLevel3Button.whenPressed(new level3());
 
 	}
