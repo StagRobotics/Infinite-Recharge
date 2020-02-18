@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+
 import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
@@ -32,7 +33,7 @@ import frc.robot.RobotMap;
 
 public class RecordPlayer extends Subsystem {
   
-  private final double ARMSPEED = 0.17;
+  private final double ARMSPEED = 0.35;
   private final boolean ISINVERSEROTOR = false;
   private final int NUMBEROFTIMESAFTER = 2;
 
@@ -49,9 +50,7 @@ public class RecordPlayer extends Subsystem {
 
   private DoubleSolenoid ToneArm = new DoubleSolenoid(RobotMap.ToneArmPort1, RobotMap.ToneArmPort2);
   private ColorSensorV3 Stylus = new ColorSensorV3(RobotMap.StylusPort);
-  private Talon Rotor = new Talon(RobotMap.rotorPort);
-  
-  
+  private Talon Rotor = new Talon(RobotMap.rotorPort); 
   public RecordPlayer() {
     // Step 2
     m_colorMatcher.addColorMatch(kBlueTarget);
@@ -63,6 +62,7 @@ public class RecordPlayer extends Subsystem {
   @Override
   protected void initDefaultCommand() {
     // TODO Auto-generated method stub
+    moveArmIn();
 
   }
 
@@ -76,8 +76,8 @@ public class RecordPlayer extends Subsystem {
     isArmOut = false;
   }
 
-  public void turnWheel(){
-    Rotor.set(ARMSPEED);
+  public void turnWheel(double speed){
+    Rotor.set(speed);
   }
 
   public void stopWheel(){
@@ -119,7 +119,7 @@ public class RecordPlayer extends Subsystem {
     String lastColor = getColorString();
 
     // Turns the wheel in a given direction
-    turnWheel();
+    turnWheel(ARMSPEED);
 
     // Each color is on the wheel twice and therefore we need to rotate at least three times
     // Each "count" is equal to half of a rotation so 3 * 2 = 6
@@ -157,7 +157,7 @@ public class RecordPlayer extends Subsystem {
     // Stops Wheel
     stopWheel();
 
-    pause(0.5);
+    pause(1);
 
     // Raises arm back into chassis
     moveArmIn();
@@ -197,25 +197,61 @@ public class RecordPlayer extends Subsystem {
     return result;
   }
 
+  public void getActualColor(String color) {
+    color = DriverStation.getInstance().getGameSpecificMessage();
+    if(color.length() > 0)
+    {
+      switch (color.charAt(0))
+      {
+        case 'B' :
+          //Blue case code
+          break;
+        case 'G' :
+          //Green case code
+          break;
+        case 'R' :
+          //Red case code
+          break;
+        case 'Y' :
+          //Yellow case code
+          break;
+        default :
+          //This is corrupt data
+          break;
+      }
+    } else {
+      getActualColor(color);
+    }
+
+  }
+
   public void completeStage3(char color) {
     // Moves toneArmOut
     moveArmOut();
 
     // Get whatever color is under the sensor when the needle is first dropped
     String startingColor = getColorString();
-
+    String previousColor = getColorString();
     // Turns the wheel in a given direction
-    turnWheel();
+    turnWheel(-ARMSPEED);
     
     while(startingColor.charAt(0) != color){
       startingColor = getColorString();
+      if(previousColor.charAt(0) == 'R' && startingColor.charAt(0) == 'Y'){
+        startingColor = "Green";
+        pause(0.2);
+      }
       Robot.m_drivetrain.log();
+      previousColor = startingColor;
     }
+
+    turnWheel(ARMSPEED);
+    pause(0.6);
 
     // Stops the wheel
     stopWheel();
 
-    pause(0.5);
+    pause(1);
 
     // Pulls the toneArm back in
     moveArmIn();
