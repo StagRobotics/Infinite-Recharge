@@ -30,6 +30,12 @@ public class Auto6Ball extends CommandGroup {
     addSequential(new Reset());
     addSequential(new IntakeBalls());
     addSequential(new getBallAuto(132));
+
+    // IDEA!!!!!!!!!!!!
+    // what if we repeated our steps to get the balls but then reversed it for the way back.
+
+
+
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

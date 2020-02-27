@@ -10,7 +10,7 @@ import edu.wpi.first.wpilibj.buttons.JoystickButton;
 public class OI {
 
 	// Initialize Joysticks
-
+	
 	private Joystick leftJoystick = new Joystick(0);
 
 	private Joystick rightJoystick = new Joystick(1);
@@ -21,7 +21,7 @@ public class OI {
 
 	public OI() {
 
-		JoystickButton getBallButton = new JoystickButton(rightJoystick, 3);
+		JoystickButton getBallButton = new JoystickButton(leftJoystick, 1);
 		getBallButton.whileActive(new getBall());
 		getBallButton.whenReleased(new StopDrive());
 
@@ -34,13 +34,13 @@ public class OI {
 		intakeButton.whenPressed(new IntakeBalls());
 		intakeButton.whenReleased(new IntakeBalls());
 
-		JoystickButton climbForwardButton = new JoystickButton(auxJoystick, 2);
+		JoystickButton climbForwardButton = new JoystickButton(auxJoystick, 3);
 
 		climbForwardButton.whenPressed(new Climb());
 
 		climbForwardButton.whenReleased(new ClimbOff());
 
-		JoystickButton climbBackwardsButton = new JoystickButton(auxJoystick, 3);
+		JoystickButton climbBackwardsButton = new JoystickButton(auxJoystick, 2);
 
 		climbBackwardsButton.whenPressed(new ClimbBackwards());
 
@@ -67,10 +67,13 @@ public class OI {
 		reset.whenPressed(new Reset());
 
 		JoystickButton doLevel2Button = new JoystickButton(leftJoystick, 8);
-		//doLevel2Button.whenPressed(new level2());
+		doLevel2Button.whenPressed(new level2());
 
 		JoystickButton doLevel3Button = new JoystickButton(leftJoystick, 7);
-		//doLevel3Button.whenPressed(new level3());
+		doLevel3Button.whenPressed(new level3());
+
+		JoystickButton emergencyReverseButton = new JoystickButton(rightJoystick, 8);
+		emergencyReverseButton.whenPressed(new ReverseIntake());
 
 	}
 

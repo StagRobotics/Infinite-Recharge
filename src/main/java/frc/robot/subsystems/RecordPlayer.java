@@ -197,33 +197,7 @@ public class RecordPlayer extends Subsystem {
     return result;
   }
 
-  public void getActualColor(String color) {
-    color = DriverStation.getInstance().getGameSpecificMessage();
-    if(color.length() > 0)
-    {
-      switch (color.charAt(0))
-      {
-        case 'B' :
-          //Blue case code
-          break;
-        case 'G' :
-          //Green case code
-          break;
-        case 'R' :
-          //Red case code
-          break;
-        case 'Y' :
-          //Yellow case code
-          break;
-        default :
-          //This is corrupt data
-          break;
-      }
-    } else {
-      getActualColor(color);
-    }
 
-  }
 
   public void completeStage3(char color) {
     // Moves toneArmOut
@@ -237,7 +211,7 @@ public class RecordPlayer extends Subsystem {
     
     while(startingColor.charAt(0) != color){
       startingColor = getColorString();
-      if(previousColor.charAt(0) == 'R' && startingColor.charAt(0) == 'Y'){
+      if((previousColor.charAt(0) == 'R' || previousColor.charAt(0) == 'G') && startingColor.charAt(0) == 'Y'){
         startingColor = "Green";
         pause(0.2);
       }
