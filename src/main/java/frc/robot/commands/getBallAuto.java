@@ -14,8 +14,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class getBallAuto extends Command {
 
-  private double leftDriveSpeed = .450;
-  private double rightDriveSpeed = .465;
+  private double leftDriveSpeed = .400;
+  private double rightDriveSpeed = .415;
 
   private double driveDistance = 0;
   private double encoderDifference = 0.0;
@@ -36,7 +36,19 @@ public class getBallAuto extends Command {
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
-    Robot.m_drivetrain.drive(-leftDriveSpeed * leftCorrectionRatio, -rightDriveSpeed * rightCorrectionRatio);
+    double leftSpeed = -leftDriveSpeed *leftCorrectionRatio;
+    double rightSpeed = -rightDriveSpeed * rightCorrectionRatio;
+    if(leftSpeed > 0 && leftSpeed < 0.35){
+      leftSpeed = 0.35;
+    } else if(leftSpeed < 0 && leftSpeed > -0.35){
+      leftSpeed = -0.35;
+    }
+    if(rightSpeed > 0 && rightSpeed < 0.35){
+      rightSpeed = 0.35;
+    } else if(rightSpeed < 0  && rightSpeed > -0.35){
+      rightSpeed = -0.35;
+    }
+    Robot.m_drivetrain.drive(leftSpeed, rightSpeed);
     if(Robot.m_drivetrain.getBallX() < 0){
       leftCorrectionRatio = 1.0;
       rightCorrectionRatio = 1.0 +  0.3 * Math.abs(Robot.m_drivetrain.getBallX() / 10);
@@ -61,6 +73,8 @@ public class getBallAuto extends Command {
   // Called once after isFinished returns true
   @Override
   protected void end() {
+    leftDriveSpeed = 0;
+    rightDriveSpeed = 0;
     Robot.m_drivetrain.drive(0.0,0.0);
   }
 

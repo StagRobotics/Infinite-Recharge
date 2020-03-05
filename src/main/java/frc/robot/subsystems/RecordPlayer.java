@@ -35,7 +35,7 @@ public class RecordPlayer extends Subsystem {
   
   private final double ARMSPEED = 0.35;
   private final boolean ISINVERSEROTOR = false;
-  private final int NUMBEROFTIMESAFTER = 2;
+  private final int NUMBEROFTIMESAFTER = 4 ;
 
   // Step 1
   private final ColorMatch m_colorMatcher = new ColorMatch();

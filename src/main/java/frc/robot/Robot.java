@@ -8,14 +8,20 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.TimedRobot;
+import frc.robot.commands.Wait;
 import frc.robot.subsystems.ClimbAndBalance;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.PizzaOven;
 import frc.robot.subsystems.RecordPlayer;
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends TimedRobot {
-  
+  //Command autoCommand = new Wait(15);
+  SendableChooser autoChooser = new SendableChooser<>();
+
   public static DriveTrain m_drivetrain;
   public static PizzaOven m_PizzaOven;
   public static ClimbAndBalance m_ClimbAndBalance;
@@ -35,6 +41,8 @@ public class Robot extends TimedRobot {
     m_ClimbAndBalance = new ClimbAndBalance();
     m_PizzaOven = new PizzaOven();
     m_oi =new OI();
+
+    //autoChooser.addDefault("Do Nothing", new AutonomousNoAuto);
 
   }
   @Override
@@ -68,7 +76,7 @@ public class Robot extends TimedRobot {
   public void autonomousPeriodic() {
 
     Scheduler.getInstance().run();
-
+    SmartDashboard.putData(Scheduler.getInstance());
   }
 
   @Override
@@ -82,7 +90,7 @@ public class Robot extends TimedRobot {
   public void teleopPeriodic() {
 
     Scheduler.getInstance().run();
-
+    SmartDashboard.putData(Scheduler.getInstance());
   }
 
   @Override

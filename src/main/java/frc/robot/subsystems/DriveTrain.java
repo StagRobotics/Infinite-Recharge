@@ -123,6 +123,7 @@ public class DriveTrain extends Subsystem {
 
 		SmartDashboard.putNumber("Encoder Left", getLeftInches());
 		SmartDashboard.putNumber("Encoder Right", getRightInches());
+		
 	}
 
 	public double getLeftInches() {
@@ -130,7 +131,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public double getRightInches() {
-		return rightEncoder.getDistance() * Math.PI * WHEEL_DIAMETER;
+		return -rightEncoder.getDistance() * Math.PI * WHEEL_DIAMETER;
 	}
 
 	public void drive(double leftY, double rightY) {
@@ -167,7 +168,7 @@ public class DriveTrain extends Subsystem {
 	}
 
 	public double getRightEncoder(){
-		return rightEncoder.getDistance()* Math.PI * WHEEL_DIAMETER;
+		return -rightEncoder.getDistance()* Math.PI * WHEEL_DIAMETER;
 	}
 
 	public double getAngle() {

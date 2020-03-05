@@ -8,27 +8,41 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Auto5Ball extends CommandGroup {
   /**
    * Add your docs here.
    */
   public Auto5Ball() {
+    addSequential(new PutSmartDashboard("Intake"));
     addSequential(new IntakeBalls());
-    addSequential(new DriveStraight(68));
+    addSequential(new PutSmartDashboard("Driving to Trench"));
+    addSequential(new DriveStraight(65, true));
+    addSequential(new PutSmartDashboard("Getting Balls"));
     addSequential(new Reset());
-    addSequential(new getBallAuto(75));
-    addSequential(new StraightenInPlace());
+    addSequential(new getBallAuto(67));
+    addSequential(new PutSmartDashboard("Going to Zero"));
+    addSequential(new Wait(1));
+    addSequential(new TurnAngle(0));
+    addSequential(new PutSmartDashboard("Resetting"));
+    addSequential(new Reset()); 
+    addSequential(new Reset());   
+    addSequential(new PutSmartDashboard("Driving Straight"));
+    addSequential(new DriveStraight(-190, false));
+    addSequential(new IntakeBalls());
     addSequential(new Reset());
-    addSequential(new DriveStraight(-200));
+    addSequential(new PutSmartDashboard("Turning"));
+    addSequential(new TurnAngle(-46));
     addSequential(new Reset());
-    addSequential(new TurnAngle(-30));
+    addSequential(new PutSmartDashboard("Driving Straight"));
+    addSequential(new DriveStraight(-45, false));
     addSequential(new Reset());
-    addSequential(new DriveStraight(-67));
-    addSequential(new Reset());
-    addSequential(new TurnAngle(32));
-    addSequential(new DriveStraight(-11));
-    addSequential(new DumpBalls());
+    addSequential(new PutSmartDashboard("Turning"));
+    addSequential(new TurnAngle(57));
+    addSequential(new PutSmartDashboard( "Driving Straight"));
+    addSequential(new DriveStraight(-19, false));
+    addSequential(new manualDumpDown());
     // Add Commands here:
     // e.g. addSequential(new Command1());
     // addSequential(new Command2());

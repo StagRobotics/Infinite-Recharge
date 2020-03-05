@@ -14,19 +14,19 @@ public class Auto6Ball extends CommandGroup {
    * Add your docs here.
    */
   public Auto6Ball() {
-    addSequential(new DriveStraight(-86));
+    addSequential(new DriveStraight(-86, false));
     addSequential(new Reset());
     addSequential(new DumpAuto());
     addSequential(new Reset());
-    addSequential(new DriveStraight(4));
+    addSequential(new DriveStraight(4, false));
     addSequential(new Reset());
     addSequential(new TurnAngle(-27));
     addSequential(new Reset());
-    addSequential(new DriveStraight(104));
+    addSequential(new DriveStraight(104, false));
     addSequential(new Reset());
     addSequential(new TurnAngle(34));
     addSequential(new Reset());
-    addSequential(new DriveStraight(58));
+    addSequential(new DriveStraight(58, false));
     addSequential(new Reset());
     addSequential(new IntakeBalls());
     addSequential(new getBallAuto(132));

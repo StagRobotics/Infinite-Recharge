@@ -16,8 +16,8 @@ public class TurnAngle extends Command {
   public double turnAngle = 0.0;
   public double currentAngle = Robot.m_drivetrain.getAngle();
 
-  private double leftDriveSpeed = .70;
-  private double rightDriveSpeed = .715;
+  private double leftDriveSpeed = .60;
+  private double rightDriveSpeed = .60;
 
   private double driveDistance = 0.0;
   private double encoderDifference = 0.0;
@@ -32,26 +32,53 @@ public class TurnAngle extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    
+    leftDriveSpeed = .60;
+    rightDriveSpeed = .60;
+    driveDistance = 0.0;
+    encoderDifference = 0.0;
+   leftCorrectionRatio = 1.0;
+    rightCorrectionRatio = 1.0;
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     currentAngle = Robot.m_drivetrain.getAngle();
-    if(turnAngle > 0){
-      Robot.m_drivetrain.drive(-leftDriveSpeed *leftCorrectionRatio, rightDriveSpeed * rightCorrectionRatio);
+    if(turnAngle == 0){
+      leftDriveSpeed = .75;
+      rightDriveSpeed = .75;
     } else {
-      Robot.m_drivetrain.drive(leftDriveSpeed *leftCorrectionRatio, -rightDriveSpeed * rightCorrectionRatio);
+      leftDriveSpeed = .60;
+      rightDriveSpeed = .60;
     }
-    leftCorrectionRatio = 1 - Math.abs(currentAngle/turnAngle);
-    rightCorrectionRatio = 1 - Math.abs(currentAngle/turnAngle);
-    if(leftCorrectionRatio < .5){
-      leftCorrectionRatio = 0.5;
+    double leftSpeed = leftDriveSpeed;
+    //*leftCorrectionRatio;
+    double rightSpeed = rightDriveSpeed;
+    //* rightCorrectionRatio;
+    /*if(leftSpeed > 0 && leftSpeed < 0.35){
+      leftSpeed = 0.35;
+    } else if(leftSpeed < 0 && leftSpeed > -0.35){
+      leftSpeed = -0.35;
     }
-    if(rightCorrectionRatio < 0.5){
-      rightCorrectionRatio = 0.5;
+    if(rightSpeed > 0 && rightSpeed < 0.35){
+      rightSpeed = 0.35;
+    } else if(rightSpeed < 0  && rightSpeed > -0.35){
+      rightSpeed = -0.35;
+    }*/
+    SmartDashboard.putNumber("Left Speed turning", leftSpeed);
+    SmartDashboard.putNumber("Right Speed turning", rightSpeed);
+    if(turnAngle > 0){
+      Robot.m_drivetrain.drive(-leftSpeed, rightSpeed);
+    } else if(turnAngle < 0) {
+      Robot.m_drivetrain.drive(leftSpeed, -rightSpeed);
+    } else {
+      if(currentAngle > 0) {
+        Robot.m_drivetrain.drive(leftSpeed, -rightSpeed);
+      } else if (currentAngle < 0) {
+        Robot.m_drivetrain.drive(-leftSpeed, rightSpeed);
+      }
     }
+   
     SmartDashboard.putNumber("Left Correct", leftCorrectionRatio);
     SmartDashboard.putNumber("Right Correct", rightCorrectionRatio);
     Robot.m_drivetrain.log();
@@ -62,8 +89,10 @@ public class TurnAngle extends Command {
   protected boolean isFinished() {
     if(turnAngle > 0){
       return currentAngle >= turnAngle;
-    } else {
+    } else if (turnAngle < 0) {
       return currentAngle <= turnAngle;
+    } else {
+      return currentAngle <= turnAngle+0.05 && currentAngle >= turnAngle-0.05;
     }
   }
 

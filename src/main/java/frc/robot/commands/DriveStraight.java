@@ -14,21 +14,26 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class DriveStraight extends Command {
 
   private double leftDriveSpeed = .65;
-  private double rightDriveSpeed = .665;
+  private double rightDriveSpeed = .65;
 
   private double driveDistance = 0.0;
   private double encoderDifference = 0.0;
   private double leftCorrectionRatio = 1.0;
   private double rightCorrectionRatio = 1.0;
 
-  public DriveStraight(double distance) {
+  public DriveStraight(double distance, boolean first) {
     requires(Robot.m_drivetrain);
+  if(first){
+    rightDriveSpeed =0.67;
+  }
     driveDistance = distance;
   }
 
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
+    leftDriveSpeed = .65;
+    rightDriveSpeed = .65;
     if(driveDistance > 0){
       leftDriveSpeed = -leftDriveSpeed;
       rightDriveSpeed = -rightDriveSpeed;
@@ -46,19 +51,42 @@ public class DriveStraight extends Command {
     Robot.m_drivetrain.drive(leftDriveSpeed * leftCorrectionRatio, rightDriveSpeed * rightCorrectionRatio);
     encoderDifference = Robot.m_drivetrain.getLeftEncoder() - Robot.m_drivetrain.getRightEncoder();
     if(Math.abs(Robot.m_drivetrain.getDistance()) > 2){
-      if(encoderDifference < -1.0){
-        leftCorrectionRatio = Robot.m_drivetrain.getRightEncoder()/Robot.m_drivetrain.getLeftEncoder();
-        //leftCorrectionRatio = leftCorrectionRatio + 0.1;
-        rightCorrectionRatio = 1.0;
-      } else if (encoderDifference > 1.0){
-        rightCorrectionRatio = Robot.m_drivetrain.getLeftEncoder()/Robot.m_drivetrain.getRightEncoder();
-        //rightCorrectionRatio = rightCorrectionRatio + 0.1;
-        leftCorrectionRatio = 1.0;
+      if(driveDistance > 0){
+        if(encoderDifference > 0){
+          leftCorrectionRatio = Robot.m_drivetrain.getRightEncoder()/Robot.m_drivetrain.getLeftEncoder();
+          leftCorrectionRatio = leftCorrectionRatio + 0.1;
+          rightCorrectionRatio = 1.0;
+        } else if (encoderDifference < 0){
+          rightCorrectionRatio = Robot.m_drivetrain.getLeftEncoder()/Robot.m_drivetrain.getRightEncoder();
+          rightCorrectionRatio = rightCorrectionRatio + 0.1;
+          leftCorrectionRatio = 1.0;
+        } else {
+          leftCorrectionRatio = 1.0;
+          rightCorrectionRatio = 1.0;
+        }
+        SmartDashboard.putNumber("Distance", Robot.m_drivetrain.getDistance());
+        Robot.m_drivetrain.log();
       } else {
-        leftCorrectionRatio = 1.0;
-        rightCorrectionRatio = 1.0;
+        if(encoderDifference < 0){
+          leftCorrectionRatio = Robot.m_drivetrain.getLeftEncoder()/Robot.m_drivetrain.getRightEncoder();
+
+          //rightCorrectionRatio = rightCorrectionRatio + 0.05;
+          leftCorrectionRatio = 1.0;
+          
+        } else if (encoderDifference > 0){
+          rightCorrectionRatio = Robot.m_drivetrain.getRightEncoder()/Robot.m_drivetrain.getLeftEncoder();
+
+          //leftCorrectionRatio = leftCorrectionRatio + 0.05;
+          rightCorrectionRatio = 1.0;
+        } else {
+          leftCorrectionRatio = 1.0;
+          rightCorrectionRatio = 1.0;
+        }
+        SmartDashboard.putNumber("Left Correct", leftCorrectionRatio);
+        SmartDashboard.putNumber("Right Correct", rightCorrectionRatio);
+        SmartDashboard.putNumber("Distance", Robot.m_drivetrain.getDistance());
+        Robot.m_drivetrain.log();
       }
-      SmartDashboard.putNumber("Distance", Robot.m_drivetrain.getDistance());
     }
   }
 
