@@ -42,6 +42,8 @@ public class RobotMap {
 
     public static int RightTwo = 3;
 
+    public static int climbLimit = 4;
+
   
 
     public static Port StylusPort = Port.kOnboard;

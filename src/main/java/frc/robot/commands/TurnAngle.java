@@ -45,8 +45,8 @@ public class TurnAngle extends Command {
   protected void execute() {
     currentAngle = Robot.m_drivetrain.getAngle();
     if(turnAngle == 0){
-      leftDriveSpeed = .75;
-      rightDriveSpeed = .75;
+      leftDriveSpeed = .60;
+      rightDriveSpeed = .60;
     } else {
       leftDriveSpeed = .60;
       rightDriveSpeed = .60;

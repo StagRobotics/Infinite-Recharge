@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Spark;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
@@ -25,6 +26,7 @@ public class ClimbAndBalance extends Subsystem {
   //Initalize Motor Controllers
   private Spark winchMotor = new Spark(RobotMap.winchMotor);
   private Spark balancer = new Spark(RobotMap.balancerMotor);
+  private DigitalInput climbLimit = new DigitalInput(RobotMap.climbLimit);
 
 
   @Override
@@ -42,7 +44,10 @@ public class ClimbAndBalance extends Subsystem {
   }
 
   public void winchBackward(){
-    winchMotor.set(-WINCHSPEED);
+    if (climbLimit.get() == false){
+      winchMotor.set(-WINCHSPEED);
+    }
+    
   }
 
   public void winchOff(){

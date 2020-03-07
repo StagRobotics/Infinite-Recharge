@@ -35,7 +35,7 @@ public class RecordPlayer extends Subsystem {
   
   private final double ARMSPEED = 0.35;
   private final boolean ISINVERSEROTOR = false;
-  private final int NUMBEROFTIMESAFTER = 4 ;
+  private final int NUMBEROFTIMESAFTER = 2 ;
 
   // Step 1
   private final ColorMatch m_colorMatcher = new ColorMatch();
@@ -124,7 +124,7 @@ public class RecordPlayer extends Subsystem {
     // Each color is on the wheel twice and therefore we need to rotate at least three times
     // Each "count" is equal to half of a rotation so 3 * 2 = 6
     // Therefore continue using the motor until we see the color 6 times
-    while(count < 6){
+    while(count < 8){
       // Get whatever the motor currently sees
       String currentColor = getColorString();
       // If the currentColor is equal to staring color, then we know we have completed a 1/2 rotation so increase the count by 1
