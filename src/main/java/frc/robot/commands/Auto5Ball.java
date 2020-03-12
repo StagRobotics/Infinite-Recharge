@@ -15,15 +15,16 @@ public class Auto5Ball extends CommandGroup {
    * Add your docs here.
    */
   public Auto5Ball() {
+    addSequential(new Reset());
     addSequential(new PutSmartDashboard("Intake"));
     addSequential(new IntakeBalls());
     addSequential(new PutSmartDashboard("Driving to Trench"));
-    addSequential(new DriveStraight(65, true));
+    addSequential(new DriveStraight(65, false));
     addSequential(new PutSmartDashboard("Getting Balls"));
     addSequential(new Reset());
     addSequential(new getBallAuto(67));
     addSequential(new PutSmartDashboard("Going to Zero"));
-    addSequential(new Wait(1));
+    addSequential(new Wait(0.3));
     addSequential(new TurnAngle(0));
     addSequential(new PutSmartDashboard("Resetting"));
     addSequential(new Reset()); 
@@ -33,15 +34,17 @@ public class Auto5Ball extends CommandGroup {
     addSequential(new IntakeBalls());
     addSequential(new Reset());
     addSequential(new PutSmartDashboard("Turning"));
-    addSequential(new TurnAngle(-46));
+    addSequential(new TurnAngle(-50));
     addSequential(new Reset());
     addSequential(new PutSmartDashboard("Driving Straight"));
-    addSequential(new DriveStraight(-45, false));
+    addSequential(new DriveStraight(-48, false));
     addSequential(new Reset());
     addSequential(new PutSmartDashboard("Turning"));
     addSequential(new TurnAngle(57));
+    addSequential(new Reset());
     addSequential(new PutSmartDashboard( "Driving Straight"));
-    addSequential(new DriveStraight(-19, false));
+    addSequential(new DriveStraight(-9, false));
+    addSequential(new PutSmartDashboard( "Dump"));
     addSequential(new manualDumpDown());
     // Add Commands here:
     // e.g. addSequential(new Command1());

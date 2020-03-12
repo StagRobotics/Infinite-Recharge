@@ -34,13 +34,13 @@ public class RobotMap {
     //Digital Input
 
 
-    public static int LeftOne = 0;
+    public static int LeftOne = 2;
 
-    public static int LeftTwo = 1;
+    public static int LeftTwo = 3;
 
-    public static int RightOne = 2;
+    public static int RightOne = 0;
 
-    public static int RightTwo = 3;
+    public static int RightTwo = 1;
 
     public static int climbLimit = 4;
 

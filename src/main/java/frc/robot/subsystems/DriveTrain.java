@@ -69,28 +69,15 @@ public class DriveTrain extends Subsystem {
 
 		rightEncoder.setMaxPeriod(1);
 		rightEncoder.setMinRate(10);
-		rightEncoder.setDistancePerPulse(0.00385);
-		//rightEncoder.setDistancePerPulse(0.00275);
-		rightEncoder.setReverseDirection(false);
+		//rightEncoder.setDistancePerPulse(0.00385);
+		rightEncoder.setDistancePerPulse(0.00275);
+		rightEncoder.setReverseDirection(true);
 		rightEncoder.setSamplesToAverage(10);
 		rightEncoder.reset();
 
 		gyro.calibrate();
 		gyro.reset();
 
-		leftEncoder.setMaxPeriod(1);
-		leftEncoder.setMinRate(10);
-		leftEncoder.setDistancePerPulse(0.00275);
-		leftEncoder.setReverseDirection(true);
-		leftEncoder.setSamplesToAverage(7);
-		leftEncoder.reset();
-
-		rightEncoder.setMaxPeriod(1);
-		rightEncoder.setMinRate(10);
-		rightEncoder.setDistancePerPulse(0.00275);
-		rightEncoder.setReverseDirection(true);
-		rightEncoder.setSamplesToAverage(7);
-		rightEncoder.reset();
 
 		addChild("Left Encoder", leftEncoder);
 		addChild("Right Encoder", rightEncoder);
@@ -151,6 +138,25 @@ public class DriveTrain extends Subsystem {
         }
         
         robotDrive.tankDrive(-leftY, -rightY);
+	}
+
+	public void drive(double leftY, double rightY, boolean squared) {
+
+        // Prevents motor movement if the input is between the DEADBAND and the negative of the DEADBAND
+
+        if (rightY < DEADBAND && rightY > -DEADBAND) {
+
+			rightY = 0.0;
+
+		}
+
+		if (leftY < DEADBAND && leftY > -DEADBAND) {
+
+			leftY = 0.0;
+
+        }
+        
+        robotDrive.tankDrive(-leftY, -rightY, squared);
 	}
 
 	public void getBall(){

@@ -73,7 +73,7 @@ public class OI {
 		doLevel3Button.whenPressed(new level3());
 
 		JoystickButton emergencyReverseButton = new JoystickButton(rightJoystick, 8);
-		emergencyReverseButton.whenPressed(new TurnAngle(0));
+		emergencyReverseButton.whenPressed(new ReverseIntake());
 
 	}
 

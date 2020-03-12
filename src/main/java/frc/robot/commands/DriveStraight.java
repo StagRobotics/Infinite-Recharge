@@ -7,14 +7,15 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class DriveStraight extends Command {
 
-  private double leftDriveSpeed = .65;
-  private double rightDriveSpeed = .65;
+  private double leftDriveSpeed = .45;
+  private double rightDriveSpeed = .45;
 
   private double driveDistance = 0.0;
   private double encoderDifference = 0.0;
@@ -24,7 +25,8 @@ public class DriveStraight extends Command {
   public DriveStraight(double distance, boolean first) {
     requires(Robot.m_drivetrain);
   if(first){
-    rightDriveSpeed =0.67;
+    rightDriveSpeed =0.35;
+    leftDriveSpeed = 0.35;
   }
     driveDistance = distance;
   }
@@ -32,8 +34,10 @@ public class DriveStraight extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    leftDriveSpeed = .65;
-    rightDriveSpeed = .65;
+    if(RobotController.getBatteryVoltage() > 11){
+    leftDriveSpeed = leftDriveSpeed +((12.8-RobotController.getBatteryVoltage())/12);
+    rightDriveSpeed = rightDriveSpeed +((12.8-RobotController.getBatteryVoltage())/12);
+    }
     if(driveDistance > 0){
       leftDriveSpeed = -leftDriveSpeed;
       rightDriveSpeed = -rightDriveSpeed;
@@ -48,17 +52,17 @@ public class DriveStraight extends Command {
     SmartDashboard.putNumber("Encoder Difference", encoderDifference);
     SmartDashboard.putNumber("Left Correct", leftCorrectionRatio);
     SmartDashboard.putNumber("Right Correct", rightCorrectionRatio);
-    Robot.m_drivetrain.drive(leftDriveSpeed * leftCorrectionRatio, rightDriveSpeed * rightCorrectionRatio);
+    Robot.m_drivetrain.drive(leftDriveSpeed * leftCorrectionRatio, rightDriveSpeed * rightCorrectionRatio, false);
     encoderDifference = Robot.m_drivetrain.getLeftEncoder() - Robot.m_drivetrain.getRightEncoder();
-    if(Math.abs(Robot.m_drivetrain.getDistance()) > 2){
+    if(Math.abs(Robot.m_drivetrain.getDistance()) > 1){
       if(driveDistance > 0){
         if(encoderDifference > 0){
           leftCorrectionRatio = Robot.m_drivetrain.getRightEncoder()/Robot.m_drivetrain.getLeftEncoder();
-          leftCorrectionRatio = leftCorrectionRatio + 0.1;
+          //leftCorrectionRatio = leftCorrectionRatio + 0.1;
           rightCorrectionRatio = 1.0;
         } else if (encoderDifference < 0){
           rightCorrectionRatio = Robot.m_drivetrain.getLeftEncoder()/Robot.m_drivetrain.getRightEncoder();
-          rightCorrectionRatio = rightCorrectionRatio + 0.1;
+          //rightCorrectionRatio = rightCorrectionRatio + 0.1;
           leftCorrectionRatio = 1.0;
         } else {
           leftCorrectionRatio = 1.0;
@@ -67,20 +71,29 @@ public class DriveStraight extends Command {
         SmartDashboard.putNumber("Distance", Robot.m_drivetrain.getDistance());
         Robot.m_drivetrain.log();
       } else {
-        if(encoderDifference < 0){
-          leftCorrectionRatio = Robot.m_drivetrain.getLeftEncoder()/Robot.m_drivetrain.getRightEncoder();
+        encoderDifference = Math.abs(Robot.m_drivetrain.getLeftEncoder()) - Math.abs(Robot.m_drivetrain.getRightEncoder());
+
+        if(encoderDifference > 0){
+          rightCorrectionRatio = Robot.m_drivetrain.getLeftEncoder()/Robot.m_drivetrain.getRightEncoder();
 
           //rightCorrectionRatio = rightCorrectionRatio + 0.05;
           leftCorrectionRatio = 1.0;
           
-        } else if (encoderDifference > 0){
-          rightCorrectionRatio = Robot.m_drivetrain.getRightEncoder()/Robot.m_drivetrain.getLeftEncoder();
+        } else if (encoderDifference < 0){
+          leftCorrectionRatio = Robot.m_drivetrain.getRightEncoder()/Robot.m_drivetrain.getLeftEncoder();
 
           //leftCorrectionRatio = leftCorrectionRatio + 0.05;
           rightCorrectionRatio = 1.0;
         } else {
           leftCorrectionRatio = 1.0;
           rightCorrectionRatio = 1.0;
+        }
+        if(Robot.m_drivetrain.getAngle() > 1.5){
+          leftCorrectionRatio = rightCorrectionRatio;
+          rightCorrectionRatio = 1.0;
+        } else if (Robot.m_drivetrain.getAngle() < -2){
+          rightCorrectionRatio = leftCorrectionRatio;
+          leftCorrectionRatio = 1.0;
         }
         SmartDashboard.putNumber("Left Correct", leftCorrectionRatio);
         SmartDashboard.putNumber("Right Correct", rightCorrectionRatio);

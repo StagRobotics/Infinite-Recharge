@@ -7,6 +7,8 @@
 
 package frc.robot.commands;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.command.Command;
 import frc.robot.Robot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -16,8 +18,8 @@ public class TurnAngle extends Command {
   public double turnAngle = 0.0;
   public double currentAngle = Robot.m_drivetrain.getAngle();
 
-  private double leftDriveSpeed = .60;
-  private double rightDriveSpeed = .60;
+  private double leftDriveSpeed = .30;
+  private double rightDriveSpeed = .30;
 
   private double driveDistance = 0.0;
   private double encoderDifference = 0.0;
@@ -32,31 +34,25 @@ public class TurnAngle extends Command {
   // Called just before this Command runs the first time
   @Override
   protected void initialize() {
-    leftDriveSpeed = .60;
-    rightDriveSpeed = .60;
-    driveDistance = 0.0;
-    encoderDifference = 0.0;
-   leftCorrectionRatio = 1.0;
-    rightCorrectionRatio = 1.0;
+    if(turnAngle == 0){
+      leftDriveSpeed = .15;
+      rightDriveSpeed = .15;
+    }
+    leftDriveSpeed = leftDriveSpeed + ((13-RobotController.getBatteryVoltage())/12);
+    rightDriveSpeed = rightDriveSpeed + ((13-RobotController.getBatteryVoltage())/12);
   }
 
   // Called repeatedly when this Command is scheduled to run
   @Override
   protected void execute() {
     currentAngle = Robot.m_drivetrain.getAngle();
-    if(turnAngle == 0){
-      leftDriveSpeed = .60;
-      rightDriveSpeed = .60;
-    } else {
-      leftDriveSpeed = .60;
-      rightDriveSpeed = .60;
-    }
+    
     double leftSpeed = leftDriveSpeed;
     //*leftCorrectionRatio;
     double rightSpeed = rightDriveSpeed;
     //* rightCorrectionRatio;
-    /*if(leftSpeed > 0 && leftSpeed < 0.35){
-      leftSpeed = 0.35;
+    /*if(leftSpeed > 0 && leftSpeed < 0.20){
+      leftSpeed = 0.20;
     } else if(leftSpeed < 0 && leftSpeed > -0.35){
       leftSpeed = -0.35;
     }
@@ -65,17 +61,18 @@ public class TurnAngle extends Command {
     } else if(rightSpeed < 0  && rightSpeed > -0.35){
       rightSpeed = -0.35;
     }*/
+    
     SmartDashboard.putNumber("Left Speed turning", leftSpeed);
     SmartDashboard.putNumber("Right Speed turning", rightSpeed);
     if(turnAngle > 0){
-      Robot.m_drivetrain.drive(-leftSpeed, rightSpeed);
+      Robot.m_drivetrain.drive(-leftSpeed, rightSpeed, false);
     } else if(turnAngle < 0) {
-      Robot.m_drivetrain.drive(leftSpeed, -rightSpeed);
+      Robot.m_drivetrain.drive(leftSpeed, -rightSpeed, false);
     } else {
       if(currentAngle > 0) {
-        Robot.m_drivetrain.drive(leftSpeed, -rightSpeed);
+        Robot.m_drivetrain.drive(leftSpeed, -rightSpeed, false);
       } else if (currentAngle < 0) {
-        Robot.m_drivetrain.drive(-leftSpeed, rightSpeed);
+        Robot.m_drivetrain.drive(-leftSpeed, rightSpeed, false);
       }
     }
    

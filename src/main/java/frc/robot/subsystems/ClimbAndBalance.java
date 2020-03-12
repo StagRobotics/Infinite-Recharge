@@ -44,7 +44,7 @@ public class ClimbAndBalance extends Subsystem {
   }
 
   public void winchBackward(){
-    if (climbLimit.get() == false){
+    if (climbLimit.get() == true){
       winchMotor.set(-WINCHSPEED);
     }
     
