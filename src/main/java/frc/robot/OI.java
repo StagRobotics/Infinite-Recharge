@@ -60,6 +60,10 @@ public class OI {
 
 		JoystickButton driveTest = new JoystickButton(rightJoystick, 6);
 
+		JoystickButton wheelShutdown = new JoystickButton(auxJoystick, 1);
+
+		wheelShutdown.whenPressed(new wheelShutdown());
+
 		//driveTest.whenPressed(new Auto6Ball());
 		driveTest.whenPressed(new Auto5Ball());
 

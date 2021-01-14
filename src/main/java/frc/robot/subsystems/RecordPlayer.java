@@ -240,4 +240,8 @@ public class RecordPlayer extends Subsystem {
       completeStage2();
     }
   }
+
+  public void wheelShutdown(){
+    stopWheel();
+  }
 }
