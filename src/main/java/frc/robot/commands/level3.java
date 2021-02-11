@@ -27,13 +27,20 @@ public class level3 extends Command {
     String gameData = DriverStation.getInstance().getGameSpecificMessage();
     char correctColor = Robot.m_RecordPlayer.getCorrectColor(gameData.charAt(0));
     Robot.m_RecordPlayer.completeStage3(correctColor);
+<<<<<<< Updated upstream
     
+=======
+>>>>>>> Stashed changes
   }
 
   // Make this return true when this Command no longer needs to run execute()
   @Override
   protected boolean isFinished() {
+<<<<<<< Updated upstream
     return true;
+=======
+    return false;
+>>>>>>> Stashed changes
   }
 
   // Called once after isFinished returns true

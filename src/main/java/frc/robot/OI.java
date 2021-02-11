@@ -69,6 +69,7 @@ public class OI {
 		JoystickButton reset = new JoystickButton(rightJoystick, 4);
 		reset.whenPressed(new Reset());
 
+<<<<<<< Updated upstream
 		JoystickButton doLevel2Button = new JoystickButton(auxJoystick, 11);
 		doLevel2Button.whenPressed(new level2());
 
@@ -78,6 +79,13 @@ public class OI {
 		JoystickButton emergencyReverseButton = new JoystickButton(rightJoystick, 8);
 		emergencyReverseButton.whenPressed(new ReverseIntake());
 
+=======
+		JoystickButton doLevel2Button = new JoystickButton(leftJoystick, 4);
+		doLevel2Button.whenPressed(new level2());
+
+		JoystickButton doLevel3Button = new JoystickButton(leftJoystick, 5);
+		doLevel3Button.whenPressed(new level3());
+>>>>>>> Stashed changes
 	}
 
 	public Joystick getLeftJoystick() {

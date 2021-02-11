@@ -42,9 +42,14 @@ public class RobotMap {
 
     public static int RightTwo = 1;
 
+<<<<<<< Updated upstream
     public static int climbLimit = 4;
 
   
+=======
+    
+    public static int rotorPort = 3;
+>>>>>>> Stashed changes
 
     public static Port StylusPort = Port.kOnboard;
 

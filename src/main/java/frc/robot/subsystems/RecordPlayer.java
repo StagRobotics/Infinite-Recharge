@@ -66,18 +66,31 @@ public class RecordPlayer extends Subsystem {
 
   }
 
+<<<<<<< Updated upstream
   public void moveArmIn() {
+=======
+  public void moveArmOut() {
+>>>>>>> Stashed changes
     ToneArm.set(DoubleSolenoid.Value.kForward);
     isArmOut = true;
   }
 
+<<<<<<< Updated upstream
   public void moveArmOut(){
+=======
+  public void moveArmIn(){
+>>>>>>> Stashed changes
     ToneArm.set(DoubleSolenoid.Value.kReverse);
     isArmOut = false;
   }
 
+<<<<<<< Updated upstream
   public void turnWheel(double speed){
     Rotor.set(speed);
+=======
+  public void turnWheel(){
+    Rotor.set(ARMSPEED);
+>>>>>>> Stashed changes
   }
 
   public void stopWheel(){
