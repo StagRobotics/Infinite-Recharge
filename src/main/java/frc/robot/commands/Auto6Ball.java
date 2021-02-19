@@ -1,0 +1,57 @@
+/*----------------------------------------------------------------------------*/
+/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Open Source Software - may be modified and shared by FRC teams. The code   */
+/* must be accompanied by the FIRST BSD license file in the root directory of */
+/* the project.                                                               */
+/*----------------------------------------------------------------------------*/
+
+package frc.robot.commands;
+
+import edu.wpi.first.wpilibj.command.CommandGroup;
+
+public class Auto6Ball extends CommandGroup {
+  /**
+   * Add your docs here.
+   */
+  public Auto6Ball() {
+    addSequential(new Reset());
+    addSequential(new DriveStraight(-83, true));
+    addSequential(new Reset());
+    addSequential(new DumpAuto());
+    addSequential(new Reset());
+    addSequential(new DriveStraight(4, false));
+    addSequential(new Reset());
+    addSequential(new TurnAngle(-27));
+    addSequential(new Reset());
+    addSequential(new DriveStraight(84, false));
+    addSequential(new Reset());
+    addSequential(new TurnAngle(28));
+    addSequential(new Reset());
+    addSequential(new DriveStraight(54, false));
+    addSequential(new Reset());
+    addSequential(new IntakeBalls());
+    addSequential(new getBallAuto(132));
+
+    // IDEA!!!!!!!!!!!!
+    // what if we repeated our steps to get the balls but then reversed it for the way back.
+
+
+
+    // Add Commands here:
+    // e.g. addSequential(new Command1());
+    // addSequential(new Command2());
+    // these will run in order.
+
+    // To run multiple commands at the same time,
+    // use addParallel()
+    // e.g. addParallel(new Command1());
+    // addSequential(new Command2());
+    // Command1 and Command2 will run in parallel.
+
+    // A command group will require all of the subsystems that each member
+    // would require.
+    // e.g. if Command1 requires chassis, and Command2 requires arm,
+    // a CommandGroup containing them would require both the chassis and the
+    // arm.
+  }
+}
